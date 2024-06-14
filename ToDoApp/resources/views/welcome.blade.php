@@ -94,6 +94,14 @@
             font-size: 16px;
             border-radius: 10px;
             cursor: pointer;
+            text-decoration: none; 
+            display: inline-block; 
+            text-align: center;
+            line-height: normal; 
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
+            
         }
         
         .right-panel form a.register-link {
@@ -104,6 +112,13 @@
             font-size: 16px;
             border-radius: 10px;
             cursor: pointer;
+            text-decoration: none; 
+            display: inline-block; 
+            text-align: center; 
+            line-height: normal;
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
     
         }
 
