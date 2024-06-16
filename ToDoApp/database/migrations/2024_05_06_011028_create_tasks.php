@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +12,14 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('title');
             $table->text('description');
-            $table->boolean('completed');
-           
+            $table->boolean('completed')->default(false);
+            $table->unsignedBigInteger('user_id'); // Adding user_id column
+            $table->timestamps();
+
+            // Define the foreign key constraint
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

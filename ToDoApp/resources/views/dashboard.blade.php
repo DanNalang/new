@@ -16,14 +16,40 @@
             margin: 0;
             padding: 0;
             display: flex;
+        }
+
+        .sidebar {
+            background-color: #0575E6;
+            width: 191px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar .title {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            margin-left: 200px;
+            width: calc(100% - 200px);
+            display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         header {
-            background-color: #5AB2FF;
+            background-color: #0575E6;
             color: white;
-            padding: 20px;
+            padding: 5px;
             text-align: center;
             width: 100%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -148,46 +174,59 @@
     </script>
 </head>
 <body>
-    <header>
-        <h1 onclick="window.location='{{ route('tasks.index') }}';">To Do List</h1>
-    </header>
-
-    @auth
-    <div class="user-menu">
-        <button onclick="toggleDropdown()">Hello, {{ Auth::user()->name }}</button>
-        <div class="dropdown" id="dropdown">
-            <a href="{{ route('profile.edit') }}">Profile</a>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit">Logout</button>
-            </form>
-        </div>
+    <div class="sidebar">
+        <div class="title">Projects</div>
     </div>
-    @endauth
+    <div class="content">
+        <header>
+            <h1 onclick="window.location='{{ route('tasks.index') }}';">To Do List</h1>
+        </header>
 
-    <div class="container">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+        @auth
+        <div class="user-menu">
+            <button onclick="toggleDropdown()">Hello, {{ Auth::user()->name }}</button>
+            <div class="dropdown" id="dropdown">
+                <a href="{{ route('profile.edit') }}">Profile</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit">Logout</button>
+                </form>
             </div>
-        @endif
+        </div>
+        @endauth
 
-        <form method="post" action="{{ route('tasks.store') }}">
-            @csrf
-            <div class="create-button">
-                <input type="text" id="titleInput" name="title" placeholder="Title">
-                <input type="text" id="descriptionInput" name="description" placeholder="Description">
-                <button type="submit">Create</button>
+        <div class="container">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form method="post" action="{{ route('tasks.store') }}">
+                @csrf
+                <div class="create-button">
+                    <input type="text" id="titleInput" name="title" placeholder="Title">
+                    <input type="text" id="descriptionInput" name="description" placeholder="Description">
+                    <button type="submit">Create</button>
+                </div>
+            </form>
+
+                <div id="chatbox">
+            <form method="post" action="{{ route('send-message') }}">
+                @csrf
+                    <input type="text" name="message" placeholder="Type your message here">
+                    <button type="submit">Send</button>
+            </form>
+                </div>
+
+            <!-- Notes Container -->
+            <div class="notes-container">
+                <!-- Dynamically generated notes will be inserted here -->
             </div>
-        </form>
-
-        <!-- Notes Container -->
-        <div class="notes-container">
-            <!-- Dynamically generated notes will be inserted here -->
         </div>
     </div>
 </body>

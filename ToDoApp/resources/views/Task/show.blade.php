@@ -12,16 +12,16 @@
     <style>
         body {
             background-color: #FFF9D0;
-            font-family: 'Indie Flower', cursive; /* Apply the Indie Flower font to the whole body */
+            font-family: 'Indie Flower', cursive; 
             margin: 0;
             padding: 0;
         }
 
         header {
             background-color: #5AB2FF; 
-            color: white; /* Text color */
+            color: white; 
             padding: 20px; 
-            text-align: center; /* Center text */
+            text-align: center;
         }
 
         .task-container {
@@ -56,6 +56,49 @@
         .go-back-link:hover {
             background-color: #4584d4;
         }
+
+        .btn {
+            margin: 5px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success {
+            background-color: #5AB2FF;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #4584d4;
+        }
+
+        .btn-info {
+            background-color: #A9A9A9;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #8a8a8a;
+        }
+
+        .btn-complete {
+            background-color: #28a745;
+            color: white;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .btn-complete:hover {
+            background-color: #218838;
+        }
+
+        .btn-complete i {
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -68,11 +111,24 @@
     <div class="task-container">
         <div class="task-detail">
             <span class="task-label">Task:</span>
-            <p>{{$todo->title}}</p>
+            <p>{{ $todo->title }}</p>
         </div>
         <div class="task-detail">
             <span class="task-label">What to do on your Task:</span>
-            <p>{{$todo->description}}</p>
+            <p>{{ $todo->description }}</p>
+        </div>
+        <div class="btn-container">
+            @if (!$todo->completed)
+                <form method="POST" action="{{ route('tasks.complete', $todo->id) }}">
+                    @csrf
+                    <button type="submit" class="btn btn-complete">
+                        Mark as Completed <i class="fas fa-check"></i>
+                    </button>
+                </form>
+            @else
+                <button class="btn btn-success" disabled>Completed</button>
+            @endif
+            <a class="btn btn-info" href="{{ route('tasks.edit', $todo->id) }}">Edit</a>
         </div>
     </div>
 </body>
